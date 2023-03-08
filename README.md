@@ -1,1 +1,0 @@
-This repository is about a on shell basics given to me on my 3rd week in the alx software engineering program.It tests my knowledge on my understanding of shell navigations, bash shourcuts, shebang, manupulating file and so on. Enjoy!
