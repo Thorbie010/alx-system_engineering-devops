@@ -1,2 +1,2 @@
 #!/bin/bash
-find . -type f -name "*.gif" | ls -1 | sort -k | uniq -u
+find . -type f -name "*.gif" | ls -1 | sort | uniq -u
