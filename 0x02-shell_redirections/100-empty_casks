@@ -1,2 +1,2 @@
 #!/bin/bash
-find . -type d -empty -print -o -type f -empty -print | tr -d './'
+find . -type f -name "*.gif" | ls -1 | sort -k | uniq -u
