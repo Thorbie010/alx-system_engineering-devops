@@ -1,5 +1,5 @@
-exec { 'install_flask':
-  command => '/usr/bin/pip3 install flask==2.1.0',
-  path    => '/usr/bin',
-  unless  => '/usr/bin/pip3 show flask | grep -q "Version: 2.1.0"',
+# script to execute a command using puppet
+exec { 'killmenow':
+  command => 'pkill killmenow',
+  path    => '/usr/bin/'
 }
