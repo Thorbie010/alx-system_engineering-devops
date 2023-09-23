@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # set the path to the private key
-private key="~key/.ssh/school"
+private_key="~key/.ssh/school"
 
 # set the SSH command using single character flags
 ssh -i "private_key" ubuntu@35.175.126.52
