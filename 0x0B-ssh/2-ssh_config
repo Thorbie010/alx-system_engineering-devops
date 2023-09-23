@@ -1,0 +1,4 @@
+# school serever config options
+Host 35.175.126.52
+    IdentifyFile ~/.ssh/school
+    Protocol 2
