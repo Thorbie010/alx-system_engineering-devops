@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 #set the name of the private key
-private key="school"
+private_key="school"
 
 # set the number of bits for the private key
-passphrase=4096
+key_bits=4096
+
+# set the password
+passphrase="betty"
 
 # generate the SSh key pair
 ssh-keygen -t rsa -b "$key_bits" -f "$private_key" -N "$passphrase"
