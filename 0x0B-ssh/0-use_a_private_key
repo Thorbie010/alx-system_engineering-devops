@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 # set the SSH command using single character flags
-ssh ubuntu@35.175.126.52 -i ~key/.ssh/school
+server="ubuntu@35.175.126.52"
+passphrase="~key/.ssh/school"
+ssh  "$server" -i "$passphrase"
