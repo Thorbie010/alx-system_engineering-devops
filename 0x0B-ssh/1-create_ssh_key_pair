@@ -5,7 +5,7 @@ private_key="school"
 # set the number of bits for the private key
 key_bits=4096
 
-# set the password
+#set the passphrase
 passphrase="betty"
 
 # generate the SSh key pair
