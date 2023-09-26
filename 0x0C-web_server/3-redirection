@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Install and configure nginx
+
+sudo apt update
+sudo apt -y install nginx
+sudo mkdir /etc/nginx/html
+sudo touch /etc/nginx/html/index.html
+sudo chmod +w /etc/nginx/html/index.html
+sudo echo "Hello World!" | sudo tee /etc/nginx/html/index.html > /dev/null
+sudo echo "
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	root /etc/nginx/html;
+	index index.html index.htm;
+
+	location /redirect_me {
+        	return 301 http://thorbie.tech/;
+    	}
+}" | sudo tee /etc/nginx/sites-available/default > /dev/null
+sudo nginx -t
+sudo service nginx restart
