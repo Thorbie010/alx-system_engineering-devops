@@ -12,17 +12,10 @@ else
 fi
 
 # Confirm Nginx listening on port 80 and return hello world
-echo 'server {
-    listen 80;
-    server_name _;
-
-    location / {
-        echo "Hello World!"
-    }
-}' | sudo tee /etc/nginx/sites-available/default > /dev/null
+echo 'Hello World!' | sudo tee /var/www/html/index.html
 
 # test nginx config
-sudonginx -t
+sudo nginx -t
 
 # if config test passes reload nginx to apply changes
 if [ $? -eq 0 ]; then
