@@ -12,7 +12,7 @@ ssh_key_path="$4"
 
 # transfer the file file using scp, disable strict host key cheking
 scp -o StrictHostKeyChecking=no -i
-"$ssh_key_path" "$file_path" "$username@$server_ip:-/"
+"$ssh_key_path" "$file_path" "$username@$server_ip:~/"
 
 # check the exit status of the scp
 if [ $? -eq 0]; then
