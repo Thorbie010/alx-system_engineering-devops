@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 # set the SSH command using single character flags
 ssh ubuntu@100.25.223.128 -i ~/.ssh/school
+

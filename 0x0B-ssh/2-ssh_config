@@ -1,6 +1,6 @@
 # school server config options
-Host 35.175.126.52
-	HostName 35.175.126.52
+Host 100.25.223.128
+	HostName 100.25.223.128
 	User ubuntu
 	IdentityFile ~/.ssh/school
 	PasswordAuthentication no
