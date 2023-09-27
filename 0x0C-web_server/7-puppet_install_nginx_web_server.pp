@@ -1,54 +1,37 @@
 # Install and configure nginx
 
 exec {'update package':
-  command =>  '/usr/bin/apt-get update && /usr/bin/apt-get upgrade -y',
+  command =>  '/usr/bin/sudo apt-get update && /usr/bin/sudo apt-get upgrade -y',
   path    => ['/bin', '/usr/bin']
 }
 
-package {'nginx':
-  ensure   => present,
-  provider =>  'apt'
+exec {'install nginx':
+  command => '/usr/bin/sudo  apt -y install nginx',
+  path    => ['/bin', '/usr/bin'],
+  require => EXEC['update package']
 }
 
-file { '/etc/nginx/html':
-  ensure  => directory,
-  require => Package['nginx']
+exec {'manage html page':
+  command => '/usr/bin/sudo mkdir /etc/nginx/html; sudo touch /etc/nginx/html/index.html; sudo chmod +w /etc/nginx/html/index.html',
+  path    => ['/bin', '/usr/bin'],
+  require => EXEC['install nginx']
 }
 
-file {'/etc/nginx/html/index.html':
-  ensure  => file,
-  content =>  "Hello world!\n",
-  mode    =>  '0666',
-  require => Package['nginx']
+exec {'write to html file':
+  command =>  '/usr/bin/sudo echo "Hello World!" | sudo tee /etc/nginx/html/index.html > /dev/null',
+  path    => ['/bin', '/usr/bin'],
+  require => EXEC['manage html page']
 }
 
-file {'/etc/nginx/sites-available/default':
-  ensure  => file,
-  content => @(EOT),
-  server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
-        root /etc/nginx/html;
-        index index.html index.htm;
-
-        location /redirect_me {
-:x
-        }
-  }
-  |-EOT
-  mode    => '0666',
-  require => Package['nginx']
+exec {'configuration':
+  command => '/usr/bin/sudo echo "server {\n\tlisten 80 default_server;\n\tlisten [::]:80 default_server;\n\troot /etc/nginx/html;\n\tindex index.html index.htm;\n\tlocation /redirect_me {\n\t\treturn 301 http://khingz.tech/;\n\t}\n\t} | sudo tee /etc/nginx/sites-available/default > /dev/null"',
+  path    => ['/bin', '/usr/bin'],
+  require => EXEC['install nginx']
 }
 
-exec {'nginx test':
-  command =>  '/usr/sbin/nginx -t',
-  path    => ['/bin', '/usr/bin', '/usr/sbin'],
-  require =>  Package['nginx']
-}
-
-exec {'nginx reload':
-  command =>  '/usr/sbin/service nginx restart',
-  path    => ['/bin', '/usr/bin', '/usr/sbin'],
-  require => Exec['nginx test']
+exec {'restart nginx':
+  command =>  '/usr/bin/sudo nginx -t; /usr/bin/sudo service nginx restart',
+  path    => ['/bin', '/usr/bin'],
+  require => EXEC['configuration']
 }
  
