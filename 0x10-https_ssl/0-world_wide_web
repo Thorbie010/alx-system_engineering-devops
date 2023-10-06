@@ -1,17 +1,29 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2086
-# Information about server domains
+# Configuring my domain zone so that the subdomain www points to a load balancer.
 
-check_domain() {
-    # Check for a valid domain
-    SUBDOMAINS=("www"  "lb-01" "web-01" "web-02")
-    if [ -z "$2" ]; then
-	for i in "${SUBDOMAINS[@]}"; do
-	    dig "$i.$1" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{split($0, SUBDOMAIN, "."); print "The subdomain " SUBDOMAIN[1] " is a " $4 " record and points to " $5}'
-	done
-    else
-	dig "$2.$1" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{split($0, SUBDOMAIN, "."); print "The subdomain " SUBDOMAIN[1] " is a " $4 " record and points to " $5}'
-    fi
+my_domain_config()
+{
+    local domain="$1"
+    local subdomain="$2"
+
+    dig "$subdomain.$domain" | grep -A1 'ANSWER SECTION:' | \
+    awk 'BEGIN { found=0 } 
+         /ANSWER SECTION:/ { found=1; next } 
+         found==1 && NF>1 { 
+             subdomain_parts = split($1, sd, ".");
+             print "The subdomain " sd[1] " is a " $4 " record and points to " $5;
+             found=0
+         }'
 }
 
-check_domain "$1" "$2"
+if [ $# -eq 2 ]
+then
+    my_domain_config "$1" "$2"
+else
+    subdomains=("www" "lb-01" "web-01" "web-02")
+
+    for subdomain in "${subdomains[@]}"
+do
+        my_domain_config "$1" "$subdomain"
+    done
+fi
