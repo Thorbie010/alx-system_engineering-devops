@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Disable all ShellCheck checks for this script
+# shellcheck disable=SC2154
+
 # Automatizing the nginx configuration
 sudo apt-get -y update
 sudo apt-get -y install nginx
