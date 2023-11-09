@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 """
-Created on Thu Sep 17 11:47:53 2020
-
-@author: Robinson Montes
+top ten
 """
 from json import loads
 from requests import get

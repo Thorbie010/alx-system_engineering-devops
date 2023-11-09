@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
-Created on Thu Sep 17 11:47:53 2020
-
-@author: Robinson Montes
+subs.py
 """
 from json import loads
 from requests import get
